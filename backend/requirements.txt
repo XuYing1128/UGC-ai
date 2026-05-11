@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+llama-index
+llama-index-llms-openai-like
+llama-index-embeddings-openai
+llama-index-vector-stores-chroma
+llama-index-retrievers-bm25
+chromadb
+tiktoken
+pytest
+python-dotenv
+psycopg2-binary
+cos-python-sdk-v5
+python-multipart
+httpx

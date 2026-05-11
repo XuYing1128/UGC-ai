@@ -1,0 +1,83 @@
+"""
+RAG Chat API 服务
+FastAPI 启动文件
+"""
+import asyncio
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+from rag.chat import router as chat_router
+from notes.router import router as notes_router
+from upload.router import router as upload_router
+from agent.router import router as agent_router
+from data.router import router as data_router
+from skill.router import router as skill_router
+from projects.router import router as projects_router
+from common.llm_config import openrouter_availability_loop
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task = asyncio.create_task(openrouter_availability_loop())
+    try:
+        yield
+    finally:
+        task.cancel()
+        try:
+            await task
+        except asyncio.CancelledError:
+            pass
+
+
+app = FastAPI(
+    title="千星沙箱 RAG Chat API",
+    description="基于 LlamaIndex 的知识库问答系统",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+# CORS 配置
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# 注册 API 路由
+app.include_router(chat_router, prefix="/api/v1")
+app.include_router(notes_router, prefix="/api/v1")
+app.include_router(upload_router, prefix="/api/v1")
+app.include_router(agent_router, prefix="/api/v1")
+app.include_router(data_router, prefix="/api/v1")
+app.include_router(skill_router, prefix="/api/v1")
+app.include_router(projects_router, prefix="/api/v1")
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+# 托管前端静态文件（必须放在最后）
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
+
+if __name__ == "__main__":
+    import argparse
+    import os
+    import uvicorn
+
+    parser = argparse.ArgumentParser(description="Run the RAG Chat FastAPI server")
+    parser.add_argument("--host", help="Host to listen on", default=os.environ.get("HOST", "0.0.0.0"))
+    parser.add_argument("--port", help="Port to listen on", type=int, default=int(os.environ.get("PORT", 8000)))
+    parser.add_argument("--reload", help="Enable auto-reload (useful in development)", action="store_true")
+    args = parser.parse_args()
+
+    # 使用 reload 时必须传入导入字符串，否则传入应用实例
+    uvicorn.run(
+        "main:app" if args.reload else app,
+        host=args.host,
+        port=args.port,
+        reload=args.reload
+    )

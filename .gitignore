@@ -1,0 +1,85 @@
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Testing
+/coverage
+
+# Production
+/build
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env*.local
+.env
+
+# Vercel
+.vercel
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# spec-kit related
+.specify/
+.specify-cache/
+design-tokens/
+/src/styles/design-tokens.css
+/src/styles/specify/
+
+.kilocode/
+
+CLAUDE.md
+
+
+# Python / pytest / editor caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.cache/
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+venv.bak/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# dotenv files (local secrets)
+.env
+
+# Frontend build artifacts served by backend (do not commit generated files)
+backend/static/*
+!backend/static/.gitkeep
+
+# Runtime UGC project data and generated compile workspaces
+backend/projects_data/
