@@ -9,8 +9,8 @@ const DataQuery = lazy(() => import('./components/DataQuery'))
 const ProjectWorkspace = lazy(() => import('./components/ProjectWorkspace'))
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('chat')
-  const [visitedTabs, setVisitedTabs] = useState<Set<Tab>>(new Set(['chat']))
+  const [activeTab, setActiveTab] = useState<Tab>('projects')
+  const [visitedTabs, setVisitedTabs] = useState<Set<Tab>>(new Set(['projects']))
   const [configVersion, setConfigVersion] = useState(0)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentConversationId, setCurrentConversationId] = useState<string>()

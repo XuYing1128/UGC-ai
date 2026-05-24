@@ -73,3 +73,10 @@ NL 需求 → Intent Spec → Knowledge Grounding → NodeGraph Plan → genshin
 - Claude：用于复杂的多步推理和工具调用（Agent 模式）
 - Codex：用于代码生成和结构化输出
 - 两者通过统一的 Skill API 复用知识查询能力
+
+## 2026-05-24 Product Entry Decision
+
+- The product should open on the UGC project workspace by default, not the generic knowledge chat.
+- The beginner path is: create/select project -> describe desired gameplay in natural language -> run AI feasibility assessment -> review difficulty, confidence, missing official docs, and risks -> confirm -> generate node graph artifacts.
+- Generation must remain gated by assessment. The UI should make it clear when a feature is ready, needs official docs, is technically uncertain, or is blocked by current Miliastra/genshin-ts capability.
+- Knowledge chat remains useful as a support surface, but the primary product promise is natural-language UGC node graph creation.
