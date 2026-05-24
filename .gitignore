@@ -83,3 +83,7 @@ backend/static/*
 
 # Runtime UGC project data and generated compile workspaces
 backend/projects_data/
+
+# Local dev server logs
+backend-dev*.log
+frontend-dev*.log
