@@ -50,3 +50,10 @@ The assessment layer may use the configured LLM, but it always has a rule-based 
 3. `生成节点图`
 
 The final generation button is disabled until assessment exists, `can_generate` is true, and the user has confirmed the assessment.
+
+## 2026-05-24 UI Pass
+
+- Rebuilt `ProjectWorkspace` as a beginner-friendly workspace with clean Chinese copy, project cards, guided examples, assessment summary, node preview, evidence cards, and compile/export actions.
+- Kept the core safety flow: assess first, user confirms second, generate third.
+- Added clearer artifact actions: check TODO, compile GIA, rule repair, AI repair, download GIA, and preview IR JSON.
+- Tightened compile safety for event nodes: only verified event APIs are emitted directly. Unverified events use a compilable placeholder event and a TODO comment that tells the user to confirm the real official node.

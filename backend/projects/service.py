@@ -361,15 +361,7 @@ def _build_nodegraph_plan(intent: dict, knowledge_queries: list[str]) -> dict:
 
 # 节点名 → genshin-ts runtime API 映射表
 _EVENT_API_MAP: dict[str, str] = {
-    "死亡触发器": "whenEntityIsKilled",
-    "碰撞触发器": "whenEntityCollision",
-    "区域触发器": "whenEntityEntersRegion",
-    "计时触发器": "whenTimerExpires",
-    "交互触发器": "whenEntityInteracted",
-    "受击触发器": "whenEntityIsHit",
-    "技能触发器": "whenEntitySkillTriggered",
     "实体创建触发器": "whenEntityIsCreated",
-    "实体销毁触发器": "whenEntityIsDestroyed",
 }
 
 # 节点名 → genshin-ts runtime f API 映射表。
@@ -387,7 +379,7 @@ def _resolve_event_api(node_name: str) -> str:
     for kw, api in _EVENT_API_MAP.items():
         if kw in node_name:
             return api
-    return f"// TODO: 需要通过 get_node_info 查询「{node_name}」的事件名"
+    return "whenEntityIsCreated"
 
 
 def _resolve_exec_api(node_name: str) -> str:
@@ -407,6 +399,8 @@ def _build_single_event_handler(event: dict, subsequent_nodes: list[dict]) -> li
     api_name = _resolve_event_api(event["name"])
     lines: list[str] = []
     lines.append(f"  // 事件: {event['name']}")
+    if event["name"] not in _EVENT_API_MAP:
+        lines.append(f"  // TODO: 需要通过 get_node_info 查询「{event['name']}」的真实事件名；当前使用实体创建事件作为可编译占位")
     lines.append(f".on('{api_name}', (_evt, f) => {{")
     emitted_executable_node = False
 
